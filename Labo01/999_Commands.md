@@ -16,7 +16,7 @@ aws ec2 create-security-group \
  --vpc-id vpc-03d46c285a2af77ba
 
 aws ec2 create-route \
---route-table-id rtb-0b24357ababc463ea \
+ --route-table-id rtb-0b24357ababc463ea \
  --destination-cidr-block 0.0.0.0/0 \
  --instance-id i-085f07b949466919e
 
@@ -50,6 +50,11 @@ Host cld_drupal
     HostName 10.0.1.10
     IdentityFile ~/.ssh/CLD_KEY_DRUPAL_DEVOPSTEAM01.pem
     User bitnami
+```
+
+# Create an AMI
+```sh
+aws ec2 create-image --instance-id i-0890609a4443bb12f --name AMI_DRUPAL_DEVOPSTEAM01_LABO02_RDS
 ```
 
 Then:
