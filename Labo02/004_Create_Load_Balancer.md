@@ -226,7 +226,16 @@ Address:	10.193.64.16#53
 Non-authoritative answer:
 Name:	internal-ELB-DEVOPSTEAM01-1563399142.eu-west-3.elb.amazonaws.com
 Address: 10.0.1.12
+
+❯ dig internal-ELB-DEVOPSTEAM01-1563399142.eu-west-3.elb.amazonaws.com
+<TRUNCATED>
+;; ANSWER SECTION:
+internal-ELB-DEVOPSTEAM01-1563399142.eu-west-3.elb.amazonaws.com. 56 IN	A 10.0.1.9
+internal-ELB-DEVOPSTEAM01-1563399142.eu-west-3.elb.amazonaws.com. 56 IN	A 10.0.1.132
+
 ```
+
+We see that the DNS is a way to round-robin between the AZs (if we run the command multiple times, the order of the records change)
 
 * From your Drupal instance, identify the ip from which requests are sent by the Load Balancer.
 
