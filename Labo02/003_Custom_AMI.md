@@ -8,10 +8,10 @@ In this task you will update your AMI with the Drupal settings and deploy it in 
 
 Note : stop the instance before
 
-|Key|Value for GUI Only|
-|:--|:--|
-|Name|AMI_DRUPAL_DEVOPSTEAM[XX]_LABO02_RDS|
-|Description|Same as name value|
+| Key         | Value for GUI Only                    |
+| :---------- | :------------------------------------ |
+| Name        | AMI_DRUPAL_DEVOPSTEAM[XX]\_LABO02_RDS |
+| Description | Same as name value                    |
 
 ```bash
 [INPUT]
@@ -24,14 +24,14 @@ aws ec2 create-image --instance-id i-0890609a4443bb12f --name AMI_DRUPAL_DEVOPST
 
 ## Task 02 - Deploy Instances
 
-* Restart Drupal Instance in Az1
+- Restart Drupal Instance in Az1
 
-* Deploy Drupal Instance based on AMI in Az2
+- Deploy Drupal Instance based on AMI in Az2
 
-|Key|Value for GUI Only|
-|:--|:--|
-|Name|EC2_PRIVATE_DRUPAL_DEVOPSTEAM[XX]_B|
-|Description|Same as name value|
+| Key         | Value for GUI Only                   |
+| :---------- | :----------------------------------- |
+| Name        | EC2_PRIVATE_DRUPAL_DEVOPSTEAM[XX]\_B |
+| Description | Same as name value                   |
 
 ```bash
 [INPUT]
@@ -64,7 +64,7 @@ aws ec2 run-instances \
 
 ### Update your ssh connection string to test
 
-* add tunnels for ssh and http pointing on the B Instance
+- add tunnels for ssh and http pointing on the B Instance
 
 ```bash
 //updated string connection
@@ -120,18 +120,18 @@ curl localhost:8080
 
 ### Read and write test through the web app
 
-* Login in both webapps (same login)
+- Login in both webapps (same login)
 
-* Change the users' email address on a webapp... refresh the user's profile page on the second and validated that they are communicating with the same db (rds).
+- Change the users' email address on a webapp... refresh the user's profile page on the second and validated that they are communicating with the same db (rds).
 
-* Observations ?
+- Observations ?
 
 > It works as expected, and the email is changed in the other instance.
-> 
+>
 > It is also instantanious, just after the refresh
 
 ### Change the profil picture
 
-* Observations ?
+- Observations ?
 
 > The image loads correctly on the first instance, but the image is not loading on the other instance. This is expected, as the storage is not shared between the instances (could be done with a multiwrite fs).
