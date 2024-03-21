@@ -22,7 +22,7 @@ aws ec2 create-route \
 
 aws ec2 authorize-security-group-ingress \
  --group-id sg-0c82cccdd3700f997 \
- --ip-permissions IpProtocol=tcp,FromPort=22,ToPort=22,IpRanges='[{CidrIp=10.0.0.0/28}]'
+ --ip-permissions IpProtocol=tcp,FromPort=22,ToPort=22,IpRanges='[{CidrIp=10.0.0.0/28},{CidrIp=10.0.1.0/28},{CidrIp=10.0.1.128/28}]'
 
 aws ec2 authorize-security-group-ingress \
  --group-id sg-0c82cccdd3700f997 \
