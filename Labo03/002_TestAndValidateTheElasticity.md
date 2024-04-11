@@ -15,70 +15,38 @@
 htop
 
 [OUTPUT]
-//copy the part representing vCPus, RAM and swap usage
 ```
+
+![](./img/CLD_HTOP.PNG)
 
 ### Stress your instance
 
 ```
 [INPUT]
-//stress command
+stress --cpu 2
 
 [OUTPUT]
-//copy the part representing vCPus, RAM and swap usage
-//tip : use two ssh sessions....
 ```
+
+![](./img/CLD_HTOP_STRESSED.PNG)
 
 - (Scale-IN) Observe the autoscaling effect on your infa
 
-```
-[INPUT]
-//Screen shot from cloud watch metric
-```
+![](./img/CLD_AWS_CLOUDWATCH_CPU_METRICS.PNG)
 
-[Sample](./img/CLD_AWS_CLOUDWATCH_CPU_METRICS.PNG)
+![](./img/CLD_AWS_EC2_LIST.PNG.PNG)
 
-```
-//TODO screenshot of ec2 instances list (running state)
-```
+![](./img/CLD_AWS_ASG_ACTIVITY_HISTORY.PNG)
 
-[Sample](./img/CLD_AWS_EC2_LIST.PNG)
-
-```
-//TODO Validate that the various instances have been distributed between the two available az.
-[INPUT]
-//aws cli command
-
-[OUTPUT]
-```
-
-```
-//TODO screenshot of the activity history
-```
-
-[Sample](./img/CLD_AWS_ASG_ACTIVITY_HISTORY.PNG)
-
-```
-//TODO screenshot of the cloud watch alarm target tracking
-```
-
-[Sample](./img/CLD_AWS_CLOUDWATCH_ALARMHIGH_STATS.PNG)
+![](./img/CLD_AWS_CLOUDWATCH_ALARMHIGH_STATS.PNG)
 
 - (Scale-OUT) As soon as all 4 instances have started, end stress on the main machine.
 
 [Change the default cooldown period](https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-scaling-cooldowns.html)
 
-```
-//TODO screenshot from cloud watch metric
-```
+![](./img/CLD_AWS_CLOUDWATCH_ALARMLOW_STATS.PNG)
 
-```
-//TODO screenshot of ec2 instances list (terminated state)
-```
-
-```
-//TODO screenshot of the activity history
-```
+![](./img/CLD_AWS_ASG_ACTIVITY_HISTORY_SCALEOUT.PNG)
 
 ## Release Cloud resources
 
