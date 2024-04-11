@@ -33,6 +33,14 @@
 ```
 [INPUT]
 //cli command
+aws autoscaling create-launch-configuration \
+    --launch-configuration-name LC-DEVOPSTEAM01 \
+    --image-id ami-043b89d6e9ef83673 \
+    --instance-type t3.micro \
+    --security-group-ids sg-0c82cccdd3700f997 \
+    --subnet-id subnet-067cd8c9786078887 \
+    --no-associate-public-ip-address \
+    --instance-monitoring Enabled=true \    
 
 [OUTPUT]
 ```
@@ -66,10 +74,27 @@
 |                               | Notification                                | None                                   |
 | Add tag to instance           | Name                                        | AUTO_EC2_PRIVATE_DRUPAL_DEVOPSTEAM[XX] |
 
-```
+```sh
 [INPUT]
 //cli command
+aws autoscaling create-auto-scaling-group \
+    --auto-scaling-group-name ASGRP_DEVOPSTEAM01 \
+    --launch-template LaunchTemplateName=LC-DEVOPSTEAM01 \
+    --min-size 1 \
+    --max-size 4 \
+    --vpc-zone-identifier "subnet-05e8874c36db0c354,subnet-067cd8c9786078887" \
+    --traffic-sources Identifier=<LB_ARN>
+    --target-group-arns <TARGET_GROUP_ARN> \
+    --health-check-type ELB \
+    --health-check-grace-period 10 \
+    --tags "Key=Name,Value=AUTO_EC2_PRIVATE_DRUPAL_DEVOPSTEAM01,PropagateAtLaunch=true"
 
+# Create the tracking scaling policy
+aws autoscaling put-scaling-policy \
+  --auto-scaling-group-name ASGRP_DEVOPSTEAM01  \
+  --policy-name TTP_DEVOPSTEAM01 \
+  --policy-type TargetTrackingScaling \
+  --target-tracking-configuration file://scaling-policy.json
 [OUTPUT]
 ```
 
