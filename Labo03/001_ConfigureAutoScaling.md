@@ -37,10 +37,9 @@ aws autoscaling create-launch-configuration \
     --launch-configuration-name LC-DEVOPSTEAM01 \
     --image-id ami-043b89d6e9ef83673 \
     --instance-type t3.micro \
-    --security-group-ids sg-0c82cccdd3700f997 \
-    --subnet-id subnet-067cd8c9786078887 \
+    --security-groups sg-0c82cccdd3700f997 \
     --no-associate-public-ip-address \
-    --instance-monitoring Enabled=true \    
+    --instance-monitoring Enabled=true
 
 [OUTPUT]
 ```
@@ -79,12 +78,11 @@ aws autoscaling create-launch-configuration \
 //cli command
 aws autoscaling create-auto-scaling-group \
     --auto-scaling-group-name ASGRP_DEVOPSTEAM01 \
-    --launch-template LaunchTemplateName=LC-DEVOPSTEAM01 \
+    --launch-template LaunchTemplateName=LT-DEVOPSTEAM01 \
     --min-size 1 \
     --max-size 4 \
     --vpc-zone-identifier "subnet-05e8874c36db0c354,subnet-067cd8c9786078887" \
-    --traffic-sources Identifier=<LB_ARN>
-    --target-group-arns <TARGET_GROUP_ARN> \
+    --target-group-arns arn:aws:elasticloadbalancing:eu-west-3:709024702237:targetgroup/TG-DEVOPSTEAM01/ef9ade524eda7d8f \
     --health-check-type ELB \
     --health-check-grace-period 10 \
     --tags "Key=Name,Value=AUTO_EC2_PRIVATE_DRUPAL_DEVOPSTEAM01,PropagateAtLaunch=true"

@@ -15,6 +15,7 @@
 htop
 
 [OUTPUT]
+2 cores
 ```
 
 ![](./img/CLD_HTOP.PNG)
@@ -23,8 +24,8 @@ htop
 
 ```
 [INPUT]
+//stress command
 stress --cpu 2
-
 [OUTPUT]
 ```
 
