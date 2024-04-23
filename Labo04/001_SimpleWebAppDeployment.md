@@ -155,17 +155,17 @@ Deliverables:
   **appengine-web.xml** and **index.jsp** files in a few sentences.
 
   ```
-  //TODO Java class files
+  We declare a Servlet that answers with an "hello world" to a GET /hello
   ```
 
   ```
-  //TODO web.xml
+  web.xml configures new variables for the webapp
   ```
 
   ```
-  //TODO appengine-web.xml
+   It contains the wanted runtime config, with all properties (including logging), and other language specific configurations.
   ```
 
   ```
-  //TODO index.jsp
+    It's a template for the welcome page that will be shown by default.
   ```

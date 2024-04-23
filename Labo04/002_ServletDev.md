@@ -81,10 +81,5 @@ To develop and test the Servlet perform the following steps:
 
 Deliverables:
 
-```
-//TODO - Commit and publish the servlet in your repo, in the 'labo4' directory.
-```
-
-```
-//TODO - Copy a screenshot of the local and the App Engine console with the Datastore Viewer.
-```
+![local console](image.png)
+![google cloud console](image-1.png)
