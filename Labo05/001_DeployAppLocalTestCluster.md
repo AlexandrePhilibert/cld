@@ -8,9 +8,9 @@ The goal of the provided example application is to store and edit a To Do list. 
 
 The required Docker images are provided on [Docker Hub](https://hub.docker.com):
 
-  * Frontend: [icclabcna/ccp2-k8s-todo-frontend]( https://hub.docker.com/r/icclabcna/ccp2-k8s-todo-frontend)
-  * API backend: [icclabcna/ccp2-k8s-todo-api](https://hub.docker.com/r/icclabcna/ccp2-k8s-todo-api)
-  * Redis 3.2.11-alpine: [redis:3.2.11-alpine](https://hub.docker.com/layers/library/redis/3.2.11-alpine/images/sha256-ca0b6709748d024a67c502558ea88dc8a1f8a858d380f5ddafa1504126a3b018?context=explore)
+- Frontend: [icclabcna/ccp2-k8s-todo-frontend](https://hub.docker.com/r/icclabcna/ccp2-k8s-todo-frontend)
+- API backend: [icclabcna/ccp2-k8s-todo-api](https://hub.docker.com/r/icclabcna/ccp2-k8s-todo-api)
+- Redis 3.2.11-alpine: [redis:3.2.11-alpine](https://hub.docker.com/layers/library/redis/3.2.11-alpine/images/sha256-ca0b6709748d024a67c502558ea88dc8a1f8a858d380f5ddafa1504126a3b018?context=explore)
 
 ## Subtask 1.1 - Installation of Minikube
 
@@ -29,7 +29,6 @@ Verify successful installation by running `minikube version`. You should see out
 ```sh
 $ minikube version: v1.25.2
 ```
-
 
 ## Subtask 1.2 - Installation of kubectl
 
@@ -54,10 +53,9 @@ Server Version: version.Info{Major:"1", Minor:"23", [...]
 >
 > Note that _Client Version_ is the version of `kubectl` while _Server Version_ refers to the version of the Kubernetes cluster. The two version numbers should be close, but it is OK if they are not the same.
 
-
 ## Subtask 1.3 - Create a one-node cluster on your local machine
 
-Create and start a one-node cluster. 
+Create and start a one-node cluster.
 
 > [!WARNING]
 >
@@ -92,7 +90,7 @@ To view the nodes in the cluster, run the `kubectl get nodes` command:
 $ kubectl get nodes
 ```
 
-This command shows all nodes that can be used to host our applications. Now we have only one node, and we can see that its status is __Ready__ (it is ready to accept applications for deployment).
+This command shows all nodes that can be used to host our applications. Now we have only one node, and we can see that its status is **Ready** (it is ready to accept applications for deployment).
 
 Detailed info on the available `kubectl` commands, syntax and parameters can be found in the `kubectl` cheat sheet: <https://kubernetes.io/docs/reference/kubectl/cheatsheet/>
 
@@ -107,7 +105,6 @@ $ minikube dashboard
 ```
 
 This will enable Dashboard and open it in the default browser.
-
 
 ## Subtask 1.4 - Deploy the application
 
@@ -134,24 +131,24 @@ Using the `redis-svc.yaml` file as example and information from `api-pod.yaml`, 
 
 Be careful with the indentation of the YAML files. If your code editor has a YAML mode, enable it.
 
-  * Deploy and verify the API-Service and Pod (similar to the Redis ones) and verify that they are up and running on the correct ports.
+- Deploy and verify the API-Service and Pod (similar to the Redis ones) and verify that they are up and running on the correct ports.
 
 ### Deploy the Frontend Pod
 
 Using the `api-pod.yaml` file as an example, create the `frontend-pod.yaml` configuration file that starts the UI Docker container in a Pod.
 
-  * Docker image for frontend container on Docker Hub is [icclabcna/ccp2-k8s-todo-frontend](https://hub.docker.com/r/icclabcna/ccp2-k8s-todo-frontend)
+- Docker image for frontend container on Docker Hub is [icclabcna/ccp2-k8s-todo-frontend](https://hub.docker.com/r/icclabcna/ccp2-k8s-todo-frontend)
 
 Note that the container runs on port: 8080
 
 It also needs to be initialized with the following environment variables (check how `api-pod.yaml` defines environment variables):
 
-  * `API_ENDPOINT_URL`: URL where the API can be accessed e.g., <http://localhost:9000>
-    * *What value must be set for this URL ?*
+- `API_ENDPOINT_URL`: URL where the API can be accessed e.g., <http://localhost:9000>
+  - _What value must be set for this URL ?_
 
 > Hint: remember that anything you define as a Service will be assigned a DOMAIN that is visible via DNS everywhere in the cluster and a PORT.
 
-  * Deploy the Pod using `kubectl`.
+- Deploy the Pod using `kubectl`.
 
 ### Verify the ToDo application
 
@@ -169,24 +166,85 @@ where `pod_name` is the name of the Frontend Pod, `pod_port` is the port where t
 
 The command blocks and keeps running to keep the tunnel open. Using your browser or another terminal window you can now access the Pod at <http://localhost:local_port>.
 
-You should see the application's main page titled __Todos V2__ and you should be able to create a new To Do item. Be patient, the application will be very slow at first.
+You should see the application's main page titled **Todos V2** and you should be able to create a new To Do item. Be patient, the application will be very slow at first.
 
 ## Deliverables
 
 Document any difficulties you faced and how you overcame them. Copy the object descriptions into the lab report.
 
-> // TODO
+```sh
+➜ k describe svc/api-svc
+Name:              api-svc
+Namespace:         default
+Labels:            component=api
+Annotations:       <none>
+Selector:          app=todo,component=api
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                10.105.57.185
+IPs:               10.105.57.185
+Port:              api  8081/TCP
+TargetPort:        8081/TCP
+Endpoints:         10.244.0.6:8081
+Session Affinity:  None
+Events:            <none>
+```
 
-```````
-// TODO object descriptions
-```````
+```sh
+➜ k describe pod/frontend
+Name:             frontend
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Wed, 01 May 2024 15:51:17 +0200
+Labels:           app=todo
+                  component=frontend
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.9
+IPs:
+  IP:  10.244.0.9
+```
 
 ```yaml
 # api-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    component: api
+  name: api-svc
+spec:
+  ports:
+    - port: 8081
+      targetPort: 8081
+      name: api
+  selector:
+    app: todo
+    component: api
+  type: ClusterIP
 ```
 
 ```yaml
 # frontend-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend
+  labels:
+    component: frontend
+    app: todo
+spec:
+  containers:
+    - name: frontend
+      image: icclabcna/ccp2-k8s-todo-frontend
+      ports:
+        - containerPort: 8080
+      env:
+        - name: API_ENDPOINT_URL
+          value: http://api-svc:8081
 ```
 
 > [!TIP]
@@ -195,8 +253,8 @@ Document any difficulties you faced and how you overcame them. Copy the object d
 >
 > Several things can be misconfigured. Remember that there are two Service dependencies:
 >
->   * the Frontend forwarding requests to the (not externally accessible) API Service;
->   * the API Service accessing the Redis Service (also only accessible from within the cluster).
+> - the Frontend forwarding requests to the (not externally accessible) API Service;
+> - the API Service accessing the Redis Service (also only accessible from within the cluster).
 >
 > #### Consulting the Pod logs
 >
@@ -208,7 +266,7 @@ Document any difficulties you faced and how you overcame them. Copy the object d
 >
 > #### Connecting to a Pod
 >
-> You may want to test if a Pod is responding correctly on its port. Use `kubectl port-forward` as described at the end of task 1. 
+> You may want to test if a Pod is responding correctly on its port. Use `kubectl port-forward` as described at the end of task 1.
 >
 > #### Running a command in a container
 >
@@ -228,4 +286,3 @@ Document any difficulties you faced and how you overcame them. Copy the object d
 > $ apt-get update
 > $ apt-get install curl
 > ```
-> 
