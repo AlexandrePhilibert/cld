@@ -65,20 +65,61 @@ Now you can verify if the ToDo application is working correctly.
 
 Document any difficulties you faced and how you overcame them. Copy the object descriptions into the lab report (if they are unchanged from the previous task just say so).
 
-> // TODO
+> The only change I needed to make was to add the `frontend-svc.yaml` file (the contents are available below).
+>
+> To deploy the entire system in the google kubernetes cluster, I had to execute the following command (in the Labo05 directory):
 
-```````
-// TODO object descriptions
-```````
+```sh
+kubectl apply -f ./files
+```
 
 ```yaml
-# frontend-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    component: frontend
+    app: todo
+  name: frontend-svc
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+      name: web
+  selector:
+    app: todo
+    component: frontend
+
 ```
 
 Take a screenshot of the cluster details from the GKE console. Copy the output of the `kubectl describe` command to describe your load balancer once completely initialized.
 
-> // TODO
+![Picture of the dashboard](./img/gcp_dash_gke.png)
 
 ```````
-// TODO object descriptions
+Name:                     frontend-svc
+Namespace:                default
+Labels:                   app=todo
+                          component=frontend
+Annotations:              cloud.google.com/neg: {"ingress":true}
+Selector:                 app=todo,component=frontend
+Type:                     LoadBalancer
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.75.251.246
+IPs:                      10.75.251.246
+LoadBalancer Ingress:     34.79.252.10
+Port:                     web  80/TCP
+TargetPort:               8080/TCP
+NodePort:                 web  30618/TCP
+Endpoints:                10.28.1.6:8080
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:
+  Type    Reason                Age    From                Message
+  ----    ------                ----   ----                -------
+  Normal  EnsuringLoadBalancer  9m3s   service-controller  Ensuring load balancer
+  Normal  EnsuredLoadBalancer   8m25s  service-controller  Ensured load balancer
+
 ```````
