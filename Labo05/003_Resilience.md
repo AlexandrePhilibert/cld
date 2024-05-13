@@ -18,8 +18,7 @@ Converting a Pod to be managed by a Deployment is quite simple.
 
   * Use only 1 instance for the Redis-Server. Why?
 
-    > // TODO
-
+    > Otherwise we would get in the situation where some data is persisted to one instance, and some to the other. So it would be possible to get in a situation where the TODO you just added does not appear.
   * Delete all application Pods (using `kubectl delete pod ...`) and replace them with deployment versions.
 
   * Verify that the application is still working and the Replica Sets are in place. (`kubectl get all`, `kubectl get pods`, `kubectl describe ...`)
@@ -43,27 +42,33 @@ $ kubectl get pods --watch
 You may also use `kubectl get all` repeatedly to see a list of all resources.  You should also verify if the application stays available by continuously reloading your browser window.
 
   * What happens if you delete a Frontend or API Pod? How long does it take for the system to react?
-    > // TODO
+    > Another one is created nearly immediately. It should happen in less than 5 seconds (the reconciliation rate of the reconcilier)
     
   * What happens when you delete the Redis Pod?
 
-    > // TODO
+    > the application is down for a few seconds, and all  the todos are lost.
     
   * How can you change the number of instances temporarily to 3? Hint: look for scaling in the deployment documentation
 
-    > // TODO
+    > You change the replicas property in the deployment YAML file. You can also use the `kubectl scale` command:
+    ```sh
+    kubectl scale deployment frontend --replicas 2
+    ```
     
   * What autoscaling features are available? Which metrics are used?
 
-    > // TODO
+    > Depends on the metrics enabled for for the cluster.
+    > The most common features are CPU and Memory Usage.
     
   * How can you update a component? (see "Updating a Deployment" in the deployment documentation)
 
-    > // TODO
+    > Update the deployment YAML file, and use `kubectl apply` to deploy the changes to the cluster.
 
 ## Subtask 3.3 - Put autoscaling in place and load-test it
 
 On the GKE cluster deploy autoscaling on the Frontend with a target CPU utilization of 30% and number of replicas between 1 and 4. 
+
+> The HPA (Horizontal Pod Autoscaler) definition file is available at [part3/frontend-hpa.yaml](./part3/frontend-hpa.yaml)
 
 Load-test using Vegeta (500 requests should be enough).
 
@@ -95,20 +100,100 @@ Load-test using Vegeta (500 requests should be enough).
 
 Document your observations in the lab report. Document any difficulties you faced and how you overcame them. Copy the object descriptions into the lab report.
 
-> // TODO
-
-```````sh
-// TODO object descriptions
-```````
+> I had to deploy the metrics service.
 
 ```yaml
-# redis-deploy.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  labels:
+    component: redis
+    app: todo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: redis
+      app: todo
+  template:
+    metadata:
+      labels:
+        component: redis
+        app: todo
+    spec:
+      containers:
+        - name: redis
+          image: redis
+          ports:
+            - containerPort: 6379
+          args:
+            - redis-server
+            - --requirepass ccp2
+            - --appendonly yes
 ```
 
 ```yaml
-# api-deploy.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  labels:
+    component: api
+    app: todo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: api
+      app: todo
+  template:
+    metadata:
+      labels:
+        component: api
+        app: todo
+    spec:
+      containers:
+        - name: api
+          image: icclabcna/ccp2-k8s-todo-api
+          ports:
+            - containerPort: 8081
+          env:
+            - name: REDIS_ENDPOINT
+              value: redis-svc
+            - name: REDIS_PWD
+              value: ccp2
 ```
 
 ```yaml
-# frontend-deploy.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    component: frontend
+    app: todo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: frontend
+      app: todo
+  template:
+    metadata:
+      labels:
+        component: frontend
+        app: todo
+    spec:
+      containers:
+        - name: frontend
+          image: icclabcna/ccp2-k8s-todo-frontend
+          ports:
+            - containerPort: 8080
+          env:
+            - name: API_ENDPOINT_URL
+              value: http://api-svc:8081
+          resources:
+            requests:
+              cpu: 10m
 ```
