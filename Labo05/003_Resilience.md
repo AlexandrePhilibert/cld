@@ -166,6 +166,7 @@ spec:
 ```
 
 ```yaml
+<<<<<<< HEAD
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -214,3 +215,7 @@ spec:
     name: frontend
   targetCPUUtilizationPercentage: 30
 ```
+=======
+# frontend-deploy.yaml
+```
+>>>>>>> 47e142d (Update 003_Resilience.md)
