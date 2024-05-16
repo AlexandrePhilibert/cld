@@ -197,3 +197,20 @@ spec:
             requests:
               cpu: 10m
 ```
+
+```yaml
+# This file was written by hand, not uing kubectl.
+
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: frontend
+spec:
+  maxReplicas: 4
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: frontend
+  targetCPUUtilizationPercentage: 30
+```
