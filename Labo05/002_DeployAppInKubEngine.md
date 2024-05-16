@@ -97,7 +97,7 @@ Take a screenshot of the cluster details from the GKE console. Copy the output o
 
 ![Picture of the dashboard](./img/gcp_dash_gke.png)
 
-```````
+```
 Name:                     frontend-svc
 Namespace:                default
 Labels:                   app=todo
@@ -122,4 +122,4 @@ Events:
   Normal  EnsuringLoadBalancer  9m3s   service-controller  Ensuring load balancer
   Normal  EnsuredLoadBalancer   8m25s  service-controller  Ensured load balancer
 
-```````
+```
