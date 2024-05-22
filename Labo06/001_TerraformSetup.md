@@ -1,4 +1,4 @@
-### Task 1: Install Terraform
+# Task 1: Install Terraform
 
 In this task you will [install Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli) on your local machine.
 

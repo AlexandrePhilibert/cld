@@ -1,4 +1,4 @@
-### Task 3: Install Ansible
+# Task 3: Install Ansible
 
 Now that you have created a VM on Google Cloud, we can configure it to add all the required software for our needs. For that we are going to use Ansible. In this task you will install Ansible on your local machine.
 
@@ -24,7 +24,7 @@ ansible --version
 
 //TODO
 [OUTPUT]
-```
+```bash
 ```
 
 You should see output similar to the following:

@@ -30,5 +30,3 @@ In this lab you will deploy a web site running on a virtual machine in the cloud
 In the first part we provision the cloud infrastructure, i.e., we create the cloud resources (virtual machine) needed for our application. The tool for cloud provisioning is Terraform.
 
 In the second part we configure the virtual machine by installing a web server and its configuration files. The tool for configuration management is Ansible.
-
-In the third (optional) part we use Terraform in a team. For that we need to share the Terraform state among the team members. Our solution is to store the Terraform state in a Version Control System.

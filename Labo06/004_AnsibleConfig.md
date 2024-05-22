@@ -1,4 +1,4 @@
-### Task 4: Configure Ansible to connect to the managed VM
+# Task 4: Configure Ansible to connect to the managed VM
 
 In this task you will tell Ansible about the machines it shall manage.
 
@@ -86,31 +86,14 @@ Deliverables:
 [INPUT]
 ```
 //terraform destroy command
-terraform apply -destroy
 ```
 
 [OUTPUT]
 ```
-google_compute_firewall.ssh: Destroying... [id=projects/labo06-terraform/global/firewalls/allow-ssh]
-google_compute_firewall.http: Destroying... [id=projects/labo06-terraform/global/firewalls/allow-http]
-google_compute_instance.default: Destroying... [id=projects/labo06-terraform/zones/europe-west6-a/instances/cldlab-terraform-ansible] google_compute_firewall.http: Still destroying... [id=projects/labo06-terraform/global/firewalls/allow-http, 10s elapsed]
-google_compute_firewall.ssh: Still destroying... [id=projects/labo06-terraform/global/firewalls/allow-ssh, 10s elapsed]
-google_compute_instance.default: Still destroying... [id=projects/labo06-terraform/zones/europe-...6-a/instances/cldlab-terraform-ansible, 10s elapsed]
-google_compute_firewall.ssh: Destruction complete after 12s
-google_compute_firewall.http: Destruction complete after 12s
-google_compute_instance.default: Still destroying... [id=projects/labo06-terraform/zones/europe-...6-a/instances/cldlab-terraform-ansible, 20s elapsed]
-google_compute_instance.default: Still destroying... [id=projects/labo06-terraform/zones/europe-...6-a/instances/cldlab-terraform-ansible, 30s elapsed]
-google_compute_instance.default: Still destroying... [id=projects/labo06-terraform/zones/europe-...6-a/instances/cldlab-terraform-ansible, 40s elapsed]
-google_compute_instance.default: Still destroying... [id=projects/labo06-terraform/zones/europe-...6-a/instances/cldlab-terraform-ansible, 50s elapsed]
-google_compute_instance.default: Destruction complete after 51s
 ```
 
 Recreate the infra (no input/output needed)
 
 ```
 //TODO
-Answer - nothing
-I imagine that the ip address is not garanty over the time. But after a deleting directly followed by a deployment, Ansible was able to connect to the infra without any changes.
-
-Is it not the idea of infra as a code ?
 ```
