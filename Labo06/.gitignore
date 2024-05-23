@@ -2,3 +2,6 @@ credentials/**
 .terraform
 terraform.tfstate
 terraform.tfstate.backup
+
+ansible.cfg
+hosts

@@ -10,7 +10,7 @@ one line in your file, without any backslashes):
     gce_instance ansible_ssh_host=<managed VM's public IP address> \
       ansible_ssh_user=<the username to access the VM> \
       ansible_ssh_private_key_file=<path to the private SSH key to access the VM>
-      
+
 Replace the fields marked with `< >` with your values.
 
 Verify that you can use Ansible to connect to the server:
@@ -82,18 +82,22 @@ Deliverables:
 
 - What happens if the infrastructure is deleted and then recreated with Terraform? What needs to be updated to access the infrastructure again?
 
-//TODO
 [INPUT]
+
 ```
-//terraform destroy command
+terraform destroy
 ```
 
 [OUTPUT]
+
 ```
+google_compute_instance.default: Destruction complete after 52s
+
+Destroy complete! Resources: 3 destroyed.
 ```
 
 Recreate the infra (no input/output needed)
 
 ```
-//TODO
+ terraform apply -input=false
 ```
