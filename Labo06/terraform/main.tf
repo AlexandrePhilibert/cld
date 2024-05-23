@@ -1,3 +1,10 @@
+# This file lists the providers used
+# It also contains a ressources such as:
+# - google_compute_instance
+# - google_compute_firewall
+#
+# Each of those resources contains the configuration that is used for this resource
+
 provider "google" {
   project     = var.gcp_project_id
   region      = "europe-west6-a"
@@ -33,7 +40,7 @@ resource "google_compute_firewall" "ssh" {
   network       = "default"
   source_ranges = ["0.0.0.0/0"]
   allow {
-    ports    = ["22"]
+    ports    = ["22", "23"]
     protocol = "tcp"
   }
 }

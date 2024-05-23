@@ -1,3 +1,5 @@
+# Lists the variables we must provide
+
 variable "gcp_project_id" {
   description = ""
   type        = string

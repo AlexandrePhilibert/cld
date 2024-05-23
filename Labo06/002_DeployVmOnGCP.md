@@ -7,19 +7,19 @@ This task is highly inspired from the following guide: [Get started with Terrafo
 
 Create a new Google Cloud project. Save the project ID, it will be used later.
 
-* Name: __labgce__
+- Name: **labgce**
 
 As we want to create a VM, you need to enable the Compute Engine API:
 
-* [Navigate to google enable api page](https://console.cloud.google.com/flows/enableapi?apiid=compute.googleapis.com)
+- [Navigate to google enable api page](https://console.cloud.google.com/flows/enableapi?apiid=compute.googleapis.com)
 
 ![EnableAPI](./img/enableAPI.png)
 
 Terraform needs credentials to access the Google Cloud API. Generate and download the Service Account Key:
 
-* Navigate to __IAM & Admin__ > __Service Accounts__. 
-* Click on the default service account > __Keys__ and __ADD KEY__ > __Create new key__ (JSON format). 
-* On your local machine, create a directory for this lab. In it, create a subdirectory named `credentials` and save the key under the name `labgce-service-account-key.json`, it will be used later.
+- Navigate to **IAM & Admin** > **Service Accounts**.
+- Click on the default service account > **Keys** and **ADD KEY** > **Create new key** (JSON format).
+- On your local machine, create a directory for this lab. In it, create a subdirectory named `credentials` and save the key under the name `labgce-service-account-key.json`, it will be used later.
 
 Generate a public/private SSH key pair that will be used to access the VM and store it in the `credentials` directory:
 
@@ -30,9 +30,9 @@ Generate a public/private SSH key pair that will be used to access the VM and st
       -N "" \
       -C ""
 
-At the root of your lab directory, create a `terraform` directory and get the [backend.tf](./appendices/backend.tf), [main.tf](./appendices/main.tf), [outputs.tf](./appendices/outputs.tf) and [variables.tf](./appendices/variables.tf) files. 
+At the root of your lab directory, create a `terraform` directory and get the [backend.tf](./appendices/backend.tf), [main.tf](./appendices/main.tf), [outputs.tf](./appendices/outputs.tf) and [variables.tf](./appendices/variables.tf) files.
 
-These files allow you to deploy a VM, except for a missing file, which you have to provide. Your task is to explore the provided files and using the [Terraform documentation](https://www.terraform.io/docs) understand what these files do. 
+These files allow you to deploy a VM, except for a missing file, which you have to provide. Your task is to explore the provided files and using the [Terraform documentation](https://www.terraform.io/docs) understand what these files do.
 
 The missing file `terraform.tfvars` is supposed to contain values for variables used in the `main.tf` file. Your task is to find out what these values should be. You can freely choose the user account name and the instance name (only lowercase letters, digits and hyphen allowed).
 
@@ -61,7 +61,7 @@ The two preceding parameters are configured in Terraform in the `metadata` secti
     metadata = {
       ssh-keys = "fred:${file("/path/to/file.pub")}"
     }
-    
+
 This is already taken care of in the provided `main.tf` file.
 
 You can now initialize the Terraform state:
@@ -69,66 +69,89 @@ You can now initialize the Terraform state:
     cd terraform
     terraform init
 
-//TODO
 [OUTPUT]
-```bash
-```
-    
-* What files were created in the `terraform` directory? Make sure to look also at hidden files and directories (`ls -a`).
 
-//TODO
+```bash
+Initializing the backend...
+
+Successfully configured the backend "local"! Terraform will automatically
+use this backend unless the backend configuration changes.
+
+Initializing provider plugins...
+- Finding latest version of hashicorp/google...
+- Installing hashicorp/google v5.30.0...
+- Installed hashicorp/google v5.30.0 (signed by HashiCorp)
+
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
+
+...
+```
+
+- What files were created in the `terraform` directory? Make sure to look also at hidden files and directories (`ls -a`).
+
 [OUTPUT]
+
 ```bash
+.terraform
+.terraform.lock.hcl
 ```
 
-* What are they used for?
+- What are they used for?
 
-//TODO
-|File/FolderName|Explanation|
-|:--|:--|
-|||
+| File/FolderName     | Explanation                                                         |
+| :------------------ | :------------------------------------------------------------------ |
+| .terraform          | Holds the terraform state and the providers used                    |
+| .terraform.lock.hcl | Contains the version of the providers used. E.g. `hashicorp/google` |
 
-
-* Check that your Terraform configuration is valid:
+- Check that your Terraform configuration is valid:
 
 ```bash
 terraform validate
 ```
 
-//TODO
 [OUTPUT]
+
 ```bash
+Success! The configuration is valid.
 ```
 
-* Create an execution plan to preview the changes that will be made to your infrastructure and save it locally:
+- Create an execution plan to preview the changes that will be made to your infrastructure and save it locally:
 
 ```bash
 terraform plan -input=false -out=.terraform/plan.cache
 ```
 
-```
-//TODO - copy the command result in a file named "planCache.json" and add it to your lab repo.
-```
-
-* If satisfied with your execution plan, apply it:
+- If satisfied with your execution plan, apply it:
 
 ```bash
-    terraform apply -input=false .terraform/plan.cache
+terraform apply -input=false .terraform/plan.cache
 ```
 
-```
-//TODO - copy the command result in a file name "planCacheApplied.txt
-```
-
-* Test access via ssh
+- Test access via ssh
 
 //TODO
 [INPUT]
+
 ```bash
+ssh user@34.65.251.148 -i ./credentials/labgce-ssh-key
 ```
 
 [OUTPUT]
+
 ```
+The authenticity of host '34.65.251.148 (34.65.251.148)' can't be established.
+ED25519 key fingerprint is SHA256:Fy2FHipaMcAXutb6PIv7QKu36heEgxeL0ighwSDpLKs.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '34.65.251.148' (ED25519) to the list of known hosts.
+Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.15.0-1060-gcp x86_64)
+
+...
 ```
 
 If no errors occur, you have successfully managed to create a VM on Google Cloud using Terraform. You should see the IP of the Google Compute instance in the console. Save the instance IP, it will be used later.
@@ -138,40 +161,33 @@ key and the Linux system user account name defined in the `terraform.tfvars` fil
 
 Deliverables:
 
-* Explain the usage of each provided file and its contents by directly adding comments in the file as needed (we must ensure that you understood what you have done). In the file `variables.tf` fill the missing documentation parts and link to the online documentation. Copy the modified files to the report.
+- Explain the usage of each provided file and its contents by directly adding comments in the file as needed (we must ensure that you understood what you have done). In the file `variables.tf` fill the missing documentation parts and link to the online documentation. Copy the modified files to the report.
+
+- Explain what the files created by Terraform are used for.
+
+- Where is the Terraform state saved? Imagine you are working in a team and the other team members want to use Terraform, too, to manage the cloud infrastructure. Do you see any problems with this? Explain.
 
 ```
-//TODO
+The terraform state is saved in terraform.tfstate.
+
+The problem that could arrise is that mulitple member of a team could update the state of the resources at the same time.
 ```
 
-* Explain what the files created by Terraform are used for.
+- What happens if you reapply the configuration (1) without changing `main.tf` (2) with a change in `main.tf`? Do you see any changes in Terraform's output? Why? Can you think of examples where Terraform needs to delete parts of the infrastructure to be able to reconfigure it?
 
 ```
-//TODO
+1. If we try to reapply the plan, we get a message: "No changes. Your infrastructure matches the configuration."
+2. The changes are applied, terraform will either try to update-in-place or recreate the resource, depending on the attribute that changed.
 ```
 
-* Where is the Terraform state saved? Imagine you are working in a team and the other team members want to use Terraform, too, to manage the cloud infrastructure. Do you see any problems with this? Explain.
+- Explain what you would need to do to manage multiple instances.
 
 ```
-//TODO
+You can add a `count` attribute to the `google_compute_instance` resource.
 ```
 
-* What happens if you reapply the configuration (1) without changing `main.tf` (2) with a change in `main.tf`? Do you see any changes in Terraform's output? Why? Can you think of examples where Terraform needs to delete parts of the infrastructure to be able to reconfigure it?
+- Take a screenshot of the Google Cloud Console showing your Google Compute instance and put it in the report.
 
-```
-//TODO
-```
+![instance](./appendices/images/instance.png)
 
-* Explain what you would need to do to manage multiple instances.
-
-```
-//TODO
-```
-
-* Take a screenshot of the Google Cloud Console showing your Google Compute instance and put it in the report.
-
-```
-//TODO
-```
-
-* Deliver a folder "terraform" with your configuration.
+- Deliver a folder "terraform" with your configuration.

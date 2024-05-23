@@ -1,0 +1,127 @@
+Terraform used the selected providers to generate the following execution plan. Resource actions are
+indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # google_compute_firewall.http will be created
+  + resource "google_compute_firewall" "http" {
+      + creation_timestamp = (known after apply)
+      + destination_ranges = (known after apply)
+      + direction          = (known after apply)
+      + enable_logging     = (known after apply)
+      + id                 = (known after apply)
+      + name               = "allow-http"
+      + network            = "default"
+      + priority           = 1000
+      + project            = "sound-district-424211-b8"
+      + self_link          = (known after apply)
+      + source_ranges      = [
+          + "0.0.0.0/0",
+        ]
+
+      + allow {
+          + ports    = [
+              + "80",
+            ]
+          + protocol = "tcp"
+        }
+    }
+
+  # google_compute_firewall.ssh will be created
+  + resource "google_compute_firewall" "ssh" {
+      + creation_timestamp = (known after apply)
+      + destination_ranges = (known after apply)
+      + direction          = (known after apply)
+      + enable_logging     = (known after apply)
+      + id                 = (known after apply)
+      + name               = "allow-ssh"
+      + network            = "default"
+      + priority           = 1000
+      + project            = "sound-district-424211-b8"
+      + self_link          = (known after apply)
+      + source_ranges      = [
+          + "0.0.0.0/0",
+        ]
+
+      + allow {
+          + ports    = [
+              + "22",
+            ]
+          + protocol = "tcp"
+        }
+    }
+
+  # google_compute_instance.default will be created
+  + resource "google_compute_instance" "default" {
+      + can_ip_forward       = false
+      + cpu_platform         = (known after apply)
+      + current_status       = (known after apply)
+      + deletion_protection  = false
+      + effective_labels     = (known after apply)
+      + guest_accelerator    = (known after apply)
+      + id                   = (known after apply)
+      + instance_id          = (known after apply)
+      + label_fingerprint    = (known after apply)
+      + machine_type         = "f1-micro"
+      + metadata             = {
+          + "ssh-keys" = <<-EOT
+                user:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB5N4h6465wuvK/rA7Pz5owhnoisoZAA1RL75YWbA24T
+            EOT
+        }
+      + metadata_fingerprint = (known after apply)
+      + min_cpu_platform     = (known after apply)
+      + name                 = "instance"
+      + project              = "sound-district-424211-b8"
+      + self_link            = (known after apply)
+      + tags_fingerprint     = (known after apply)
+      + terraform_labels     = (known after apply)
+      + zone                 = "europe-west6-a"
+
+      + boot_disk {
+          + auto_delete                = true
+          + device_name                = (known after apply)
+          + disk_encryption_key_sha256 = (known after apply)
+          + kms_key_self_link          = (known after apply)
+          + mode                       = "READ_WRITE"
+          + source                     = (known after apply)
+
+          + initialize_params {
+              + image                  = "ubuntu-os-cloud/ubuntu-2004-lts"
+              + labels                 = (known after apply)
+              + provisioned_iops       = (known after apply)
+              + provisioned_throughput = (known after apply)
+              + size                   = (known after apply)
+              + type                   = (known after apply)
+            }
+        }
+
+      + network_interface {
+          + internal_ipv6_prefix_length = (known after apply)
+          + ipv6_access_type            = (known after apply)
+          + ipv6_address                = (known after apply)
+          + name                        = (known after apply)
+          + network                     = "default"
+          + network_ip                  = (known after apply)
+          + stack_type                  = (known after apply)
+          + subnetwork                  = (known after apply)
+          + subnetwork_project          = (known after apply)
+
+          + access_config {
+              + nat_ip       = (known after apply)
+              + network_tier = (known after apply)
+            }
+        }
+    }
+
+Plan: 3 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + gce_instance_ip = (known after apply)
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: .terraform/plan.cache
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply ".terraform/plan.cache"
