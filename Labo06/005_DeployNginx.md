@@ -113,7 +113,6 @@ You can then test the new web site by pointing your browser to the
 address of the managed server. You should see the homepage showing
 "NGINX, configured by Ansible".
 
-//TODO
 [INPUT]
 
 ```bash
@@ -145,11 +144,10 @@ Deliverables:
 
 - Explain the usage of each file and its contents, add comments to the different blocks if needed (we must ensure that you understood what you have done). Link to the online documentation. Link to the online documentation.
 
-//TODO
-|FileName|Explanation|
-|:--|:--|
-|hosts|Contains the list of hosts that ansible can manage|
-|ansible.cfg|Contains a list of configuration properties for ansible|
-|playbooks|Contains the playbooks, along with the files and templates used by the playbooks|
+| FileName    | Explanation                                                                      |
+| :---------- | :------------------------------------------------------------------------------- |
+| hosts       | Contains the list of hosts that ansible can manage                               |
+| ansible.cfg | Contains a list of configuration properties for ansible                          |
+| playbooks   | Contains the playbooks, along with the files and templates used by the playbooks |
 
 - Deliver a folder "ansible" with your configuration.

@@ -134,7 +134,6 @@ terraform apply -input=false .terraform/plan.cache
 
 - Test access via ssh
 
-//TODO
 [INPUT]
 
 ```bash
