@@ -3,10 +3,10 @@
 In this task you will configure the managed host to run an NGINX web
 server. This will necessitate four files:
 
-* The inventory file from the previous task _(ansible/hosts)_.
-* A playbook with instructions what to configure _(ansible/playbooks/web.yml)_.
-* The configuration file for NGINX _(ansible/playbooks/files/nginx.conf)_.
-* A template for the home page of our web site _(ansible/playbooks/templates/index.html.j2)_.
+- The inventory file from the previous task _(ansible/hosts)_.
+- A playbook with instructions what to configure _(ansible/playbooks/web.yml)_.
+- The configuration file for NGINX _(ansible/playbooks/files/nginx.conf)_.
+- A template for the home page of our web site _(ansible/playbooks/templates/index.html.j2)_.
 
 To make our playbook more generic, we will refer to our managed server
 not by its individual name, but we will create a group called
@@ -26,9 +26,16 @@ You should now be able to ping the webservers group:
 ansible webservers -m ping
 ```
 
-//TODO
 [OUTPUT]
+
 ```json
+gce_instance | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
 ```
 
 The output should be the same as before.
@@ -108,12 +115,30 @@ address of the managed server. You should see the homepage showing
 
 //TODO
 [INPUT]
+
 ```bash
-curl <yourIP>
+curl 34.65.251.148
 ```
 
 [OUTPUT]
+
 ```html
+<html>
+    <head>
+    <title>Welcome to ansible</title> </head>
+    <body>
+    <h1>nginx, configured by Ansible</h1>
+    <p>If you can see this, Ansible successfully installed nginx.</p>
+    <p>Ansible managed</p>
+    <p>Some facts Ansible gathered about this machine:
+    <table>
+        <tr><td>OS family:</td><td>Debian</td></tr>
+        <tr><td>Distribution:</td><td>Ubuntu</td></tr>
+        <tr><td>Distribution version:</td><td>20.04</td></tr>
+    </table>
+    </p>
+    </body>
+</html>
 ```
 
 Deliverables:
@@ -123,7 +148,8 @@ Deliverables:
 //TODO
 |FileName|Explanation|
 |:--|:--|
-||||
+|hosts|Contains the list of hosts that ansible can manage|
+|ansible.cfg|Contains a list of configuration properties for ansible|
+|playbooks|Contains the playbooks, along with the files and templates used by the playbooks|
 
-
-* Deliver a folder "ansible" with your configuration.
+- Deliver a folder "ansible" with your configuration.
